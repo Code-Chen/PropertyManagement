@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.property.dao.BlockDao">
+	<resultMap id="BaseResultMap" type="com.property.bean.Block">
+		<id column="id" property="blockId" />
+		<result column="block_name" property="blockName" />
+		<result column="manager" property="manager" />
+		<result column="build_time" property="buildTime" />
+		<result column="struct_area" property="structArea" />
+		<result column="number" property="number" />
+		<result column="address" property="address" />
+		<result column="green_area" property="greenArea" />
+		<result column="road_area" property="roadArea" />
+		<result column="park_area" property="parkArea" />
+		<result column="tel" property="tel" />
+		<result column="detail" property="detail" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, block_name,manager,
+		build_time,struct_area,number,address,green_area,road_area, park_area,tel,detail
+	</sql>
+	<select id="selectBlockManager"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from block
+		where id = 1
+		
+	</select>
+</mapper>

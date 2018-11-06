@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.property.dao.PublishDao">
+	<resultMap id="BaseResultMap"
+		type="com.property.bean.Publish">
+		<id column="id" property="publishId" />
+		<result column="code" property="code" />
+		<result column="name" property="name" />
+		<result column="pub_date" property="pubDate" />
+		<result column="content" property="content" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, code, name, pub_date, content
+	</sql>
+	<select id="selectAllPublish" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from publish order by pub_date desc
+	</select>
+	<select id="selectPublishById" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from publish where id = #{id,jdbcType=INTEGER}
+	</select>
+
+	<select id="showList" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from publish order by pub_date desc limit #{index,jdbcType=INTEGER},9
+	</select>
+	<!-- 用于获取总页数 -->
+	<select id="pageCount" resultType="int">
+		select count(*) from publish
+	</select>
+</mapper>

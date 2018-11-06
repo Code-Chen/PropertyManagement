@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.property.dao.OwnerDao">
+	<resultMap id="BaseResultMap" type="com.property.bean.Owner">
+		<id column="id" property="ownerId" />
+		<result column="name" property="name" />
+		<result column="tel" property="tel" />
+		<result column="phone" property="phone" />
+		<result column="email" property="email" />
+		<result column="user_id" property="userId" />
+		<result column="work_address" property="workAddress" />
+		<result column="address" property="address" />
+		<result column="login_name" property="loginName" />
+		<result column="password" property="password" />
+		<result column="detail" property="detail" />
+		<association property="ownerInfo" javaType="OwnerInfo">
+			<id column="id" property="ownerInfoId" />
+			<result column="house" property="house" />
+			<result column="owner" property="owner" />
+			<result column="house_id" property="houseId" />
+		</association>
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, name,tel,
+		phone,email,user_id,work_address,address,login_name, password,detail
+	</sql>
+	<select id="selectByLoginNameAndPassword"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from owner
+		where login_name = #{loginName,jdbcType=VARCHAR} and
+		password = #{password,jdbcType=VARCHAR} limit 1
+	</select>
+	<select id="selectOwnerInfo" resultMap="BaseResultMap">
+		select a.*,b.* from owner a,owner_info b where a.id = b.owner and
+		a.login_name = #{loginName,jdbcType=VARCHAR} and
+		a.password =
+		#{password,jdbcType=VARCHAR} limit 1
+	</select>
+	<update id="updateOwnerInfoById"
+		parameterType="com.property.bean.Owner">
+		update owner
+		set tel = #{ownerTel,jdbcType=VARCHAR},
+		address = #{ownerAddress,jdbcType=VARCHAR},
+		email = #{ownerEmail,jdbcType=VARCHAR},
+		work_address = #{ownerWorkAddress,jdbcType=VARCHAR},
+		phone = #{ownerPhone,jdbcType = VARCHAR }
+		where id = #{ownerId,jdbcType=INTEGER}
+	</update>
+
+	<select id="selectById" resultMap="BaseResultMap">
+		select a.*,b.* from owner a,owner_info b where a.id = b.owner and a.id =
+		#{ownerId,jdbcType = INTEGER} limit 1
+	</select>
+
+	<update id="updateLoginNameById"
+		parameterType="com.property.bean.Owner">
+		update owner
+		set login_name = #{newLonginName,jdbcType = VARCHAR }
+		where id = #{ownerId,jdbcType=INTEGER}
+	</update>
+	
+	
+	<update id="updatePassWord"
+		parameterType="com.property.bean.Owner">
+		update owner
+		set password = #{confirmPassWord,jdbcType = VARCHAR }
+		where id = #{ownerId,jdbcType=INTEGER} and password = #{oldPassWord,jdbcType = VARCHAR }
+	</update>
+</mapper>

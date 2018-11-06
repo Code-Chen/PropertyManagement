@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.property.dao.FacilityDao">
+	<resultMap id="BaseResultMap"
+		type="com.property.bean.Facility">
+		<id column="id" property="faciliyId" />
+		<result column="name" property="name" />
+		<result column="manager" property="manager" />
+		<result column="type" property="type" />
+		<result column="contact" property="contact" />
+		<result column="tel" property="tel" />
+		<result column="detail" property="detail" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, type, code, name, DecorationStandard
+	</sql>
+	<insert id="insertFacility" parameterType="com.property.bean.Facility">
+	insert into facility
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        name,
+      </if>
+      <if test="manager != null">
+        manager,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="contact != null">
+        contact,
+      </if>
+      <if test="tel != null">
+        tel,
+      </if>
+        <if test="detail != null">
+        detail,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        #{name,jdbcType = VARCHAR},
+      </if>
+      <if test="manager != null">
+        #{manager,jdbcType = VARCHAR},
+      </if>
+      <if test="type != null">
+         #{type,jdbcType = INTEGER},
+      </if>
+      <if test="contact != null">
+         #{contact,jdbcType = VARCHAR},
+      </if>
+      <if test="tel != null">
+        #{tel,jdbcType = VARCHAR},
+      </if>
+        <if test="detail != null">
+          #{detail,jdbcType = VARCHAR},
+      </if>
+    </trim>
+	</insert>
+</mapper>

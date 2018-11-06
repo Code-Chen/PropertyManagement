@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.property.dao.AdminDao">
+	<resultMap id="BaseResultMap" type="com.property.bean.Admin">
+		<id column="id" property="adminId" />
+		<result column="name" property="name" />
+		<result column="login_name" property="loginName" />
+		<result column="password" property="password" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, name, login_name, password
+	</sql>
+	<select id="selectByLoginNameAndPassword"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from admin
+		where login_name = #{loginName,jdbcType=VARCHAR} and password = #{password,jdbcType=VARCHAR}
+	</select>
+</mapper>
